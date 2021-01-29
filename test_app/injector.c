@@ -13,9 +13,9 @@
 
 struct ghost_map                                                                
 {                                                                               
-	int pid;                                                                    
-	int count_page;                                                             
-	unsigned long *page_addr;                                                   
+    int pid;                                                                    
+    int count_page;                                                             
+    unsigned long *page_addr;                                                   
 };
  
 int* map()
