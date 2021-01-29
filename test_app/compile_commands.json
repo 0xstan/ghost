@@ -1,0 +1,12 @@
+[
+ {
+  "directory": "/home/sar/src/project/ghost_mem/test_app",
+  "arguments": [
+   "g++",
+   "test.cpp",
+   "-o",
+   "test"
+  ],
+  "file": "test.cpp"
+ }
+]
