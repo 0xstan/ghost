@@ -28,41 +28,42 @@ int* map()
  
 int main(int argc, char ** argv)
 {
-        int fd;
-        int32_t value, number;
+    int fd;
+    int32_t value, number;
 
-		unsigned long pa[] = {0x666000};
+    unsigned long pa[] = {0x666000};
 
-        int pid = strtol(argv[1], 0, 10);
-		
-		struct ghost_map to_map = 
-        {
-            .pid = pid, 
-            .count_page = sizeof(pa) / sizeof(unsigned long), 
-            .page_addr = pa
-        };
+    int pid = strtol(argv[1], 0, 10);
+    
+    struct ghost_map to_map = 
+    {
+        .pid = pid, 
+        .count_page = sizeof(pa) / sizeof(unsigned long), 
+        .page_addr = pa
+    };
 
-        int* addr = map();
- 
-        printf("Opening Driver\n");
+    int* addr = map();
 
-        fd = open("/dev/ghost_device", O_RDWR);
+    printf("Opening Driver\n");
 
-        if(fd < 0) {
-			printf("Cannot open device file...\n");
-            return 0;
-        }
- 
-        ioctl(fd, GHOST, &to_map); 
+    fd = open("/dev/ghost_device", O_RDWR);
 
-        fgetc(stdin);
+    if(fd < 0) 
+    {
+        printf("Cannot open device file...\n");
+        return 0;
+    }
 
-        *addr = 0xfeedface;
+    ioctl(fd, GHOST, &to_map); 
 
-        fgetc(stdin);
+    fgetc(stdin);
 
-        ioctl(fd, UNGHOST, pid); 
- 
-        printf("Closing Driver\n");
-        close(fd);
+    *addr = 0xfeedface;
+
+    fgetc(stdin);
+
+    ioctl(fd, UNGHOST, pid); 
+
+    printf("Closing Driver\n");
+    close(fd);
 }
